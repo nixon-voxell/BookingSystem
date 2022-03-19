@@ -4,6 +4,10 @@
  */
 package nix.bookingsystem;
 
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+
 /**
  *
  * @author cheng
@@ -43,7 +47,6 @@ public class HotelsForm extends javax.swing.JFrame
     _seaContentPanel = new javax.swing.JPanel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize(new java.awt.Dimension(1000, 600));
 
     _accountsTitle.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
     _accountsTitle.setText("Hotel Rooms");
@@ -104,12 +107,14 @@ public class HotelsForm extends javax.swing.JFrame
     _seaTitlePanel.setLayout(_seaTitlePanelLayout);
     _seaTitlePanelLayout.setHorizontalGroup(
       _seaTitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(_seaTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+      .addComponent(_seaTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     _seaTitlePanelLayout.setVerticalGroup(
       _seaTitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addComponent(_seaTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
     );
+
+    _seaContentPanel.setPreferredSize(new java.awt.Dimension(480, 466));
 
     javax.swing.GroupLayout _seaContentPanelLayout = new javax.swing.GroupLayout(_seaContentPanel);
     _seaContentPanel.setLayout(_seaContentPanelLayout);
@@ -136,7 +141,7 @@ public class HotelsForm extends javax.swing.JFrame
       .addGroup(_seaPanelLayout.createSequentialGroup()
         .addComponent(_seaTitlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(_seaContentScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))
+        .addComponent(_seaContentScroll))
     );
 
     _splitPane.setRightComponent(_seaPanel);
@@ -209,6 +214,19 @@ public class HotelsForm extends javax.swing.JFrame
         new HotelsForm().setVisible(true);
       }
     });
+  }
+  
+  public void InitializeHotels()
+  {
+    _jungleContentPanel.setLayout(new GridLayout(10, 2));
+    
+    ArrayList<Hotel> hotels = BookingSystem.hotelManager.getHotels();
+    for (int h=0; h < 10; h++)
+    {
+      Hotel hotel = hotels.get(h);
+      JLabel label = new JLabel(hotel.name);
+      _jungleContentPanel.add(label);
+    }
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

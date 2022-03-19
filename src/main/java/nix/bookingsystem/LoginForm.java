@@ -160,6 +160,7 @@ public class LoginForm extends javax.swing.JFrame {
 
   private void LoginSuccessful()
   {
+    BookingSystem.hotelsForm.InitializeHotels();
     BookingSystem.SwitchForm(BookingSystem.hotelsForm);
   }
   

@@ -31,6 +31,7 @@ public class BookingSystem
   public static HotelsForm hotelsForm;
   
   public static AccountManager accountManager;
+  public static HotelManager hotelManager;
   
   private static JFrame _currForm;
 
@@ -46,6 +47,9 @@ public class BookingSystem
     // initialize accounts    
     accountManager = new AccountManager("accounts");
     accountManager.LoadAccounts();
+    // initialize hotels
+    hotelManager = new HotelManager("hotels");
+    hotelManager.LoadHotels();
   }
   
   public static void SwitchForm(JFrame form)
