@@ -15,9 +15,9 @@ public class AccountManager extends AbstractFileManager
 {
   private ArrayList<Account> _accounts;
 
-  public AccountManager(String fileusername)
+  public AccountManager(String filename)
   {
-    super(fileusername);
+    super(filename);
   }
 
   public void LoadAccounts() throws Exception
