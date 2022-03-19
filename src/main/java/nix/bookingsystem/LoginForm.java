@@ -26,7 +26,8 @@ public class LoginForm extends javax.swing.JFrame {
    */
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents() {
+  private void initComponents()
+  {
 
     _titleLabel = new javax.swing.JLabel();
     _loginPanel = new javax.swing.JPanel();
@@ -34,10 +35,11 @@ public class LoginForm extends javax.swing.JFrame {
     _usernameLabel = new javax.swing.JLabel();
     _passwordLabel = new javax.swing.JLabel();
     _usernameField = new javax.swing.JTextField();
-    _passwordField = new javax.swing.JTextField();
     _loginButton = new javax.swing.JButton();
+    _passwordField = new javax.swing.JPasswordField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setPreferredSize(new java.awt.Dimension(1000, 600));
 
     _titleLabel.setFont(new java.awt.Font("Colonna MT", 0, 36)); // NOI18N
     _titleLabel.setText("The Grand Hotel");
@@ -54,16 +56,20 @@ public class LoginForm extends javax.swing.JFrame {
     _passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     _passwordLabel.setText("Password:");
 
-    _usernameField.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    _usernameField.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         _usernameFieldActionPerformed(evt);
       }
     });
 
-    _loginButton.setFont(new java.awt.Font("Segoe Script", 0, 12)); // NOI18N
+    _loginButton.setFont(new java.awt.Font("Maiandra GD", 0, 12)); // NOI18N
     _loginButton.setText("LOGIN");
-    _loginButton.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    _loginButton.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         _loginButtonActionPerformed(evt);
       }
     });
@@ -100,7 +106,7 @@ public class LoginForm extends javax.swing.JFrame {
         .addGroup(_loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(_passwordLabel)
           .addComponent(_passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(50, 50, 50)
+        .addGap(48, 48, 48)
         .addComponent(_loginButton)
         .addContainerGap(78, Short.MAX_VALUE))
     );
@@ -114,7 +120,7 @@ public class LoginForm extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(_loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(_titleLabel))
-        .addContainerGap(394, Short.MAX_VALUE))
+        .addContainerGap(416, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,7 +129,7 @@ public class LoginForm extends javax.swing.JFrame {
         .addComponent(_titleLabel)
         .addGap(52, 52, 52)
         .addComponent(_loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(55, Short.MAX_VALUE))
+        .addContainerGap(158, Short.MAX_VALUE))
     );
 
     pack();
@@ -132,20 +138,34 @@ public class LoginForm extends javax.swing.JFrame {
   private void _loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__loginButtonActionPerformed
     String username = _usernameField.getText();
     String password = _passwordField.getText();
-    
-    if (username == "admin" && password == "admin")
+
+    if (username.equals("admin") && password.equals("admin"))
     {
-      LoginSuccessful();
+      BookingSystem.accountsForm.InitializeAccounts();
+      BookingSystem.SwitchForm(BookingSystem.accountsForm);
+      return;
+    } else
+    {
+      Account loginAccount = new Account(username, password);
+      int accountNum = BookingSystem.accountManager.HasAccount(loginAccount);
+      if (accountNum != -1)
+      {
+        LoginSuccessful();
+        return;
+      }
     }
-//    JOptionPane.showMessageDialog(this, dialogMsg);
+    
+    LoginFail();
   }//GEN-LAST:event__loginButtonActionPerformed
 
   private void LoginSuccessful()
   {
+    BookingSystem.SwitchForm(BookingSystem.hotelsForm);
   }
   
   private void LoginFail()
   {
+    JOptionPane.showMessageDialog(this, "Invalid password or username.");
   }
   
   private void _usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__usernameFieldActionPerformed
@@ -192,7 +212,7 @@ public class LoginForm extends javax.swing.JFrame {
   private javax.swing.JButton _loginButton;
   private javax.swing.JPanel _loginPanel;
   private javax.swing.JLabel _loginTitle;
-  private javax.swing.JTextField _passwordField;
+  private javax.swing.JPasswordField _passwordField;
   private javax.swing.JLabel _passwordLabel;
   private javax.swing.JLabel _titleLabel;
   private javax.swing.JTextField _usernameField;

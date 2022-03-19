@@ -5,6 +5,8 @@
 package nix.bookingsystem;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -22,6 +24,7 @@ public abstract class AbstractFileManager
   public AbstractFileManager(String filename)
   {
     this._filepath = ROOT_FOLDER + filename + ".txt";
+    _contents = new String[0];
   }
   
   public void ReadFile() throws Exception
@@ -32,12 +35,26 @@ public abstract class AbstractFileManager
     Scanner scanner = new Scanner(file);
     while (scanner.hasNextLine())
       rawData += scanner.nextLine() + "\n";
-    
+
+    scanner.close();
     _contents = rawData.split("\n");
   }
   
-  private String[] ReadLine(int lineNumber)
+  protected String[] ReadLine(int lineNumber)
   {
     return _contents[lineNumber].split(SEPARATOR);
+  }
+  
+  protected void WriteFile(String data) throws IOException
+  {
+    FileWriter fileWriter = new FileWriter(_filepath);
+    fileWriter.write(data);
+    fileWriter.close();
+  }
+  
+  public int ContentLength()
+  {
+    if (_contents == null) return 0;
+    return _contents.length;
   }
 }

@@ -22,26 +22,36 @@ onced book, room will not be able to be booked again
 */
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 public class BookingSystem
 {
-  private static LoginForm _loginForm;
+  public static LoginForm loginForm;
+  public static AccountsForm accountsForm;
+  public static HotelsForm hotelsForm;
+  
+  public static AccountManager accountManager;
+  
+  private static JFrame _currForm;
 
   public static void main(String[] args) throws Exception
   {
-//    try {
-//      UIManager.setLookAndFeel(new FlatDarkLaf());
-//    } catch (UnsupportedLookAndFeelException ex) {
-//      Logger.getLogger(BookingSystem.class.getName()).log(Level.SEVERE, null, ex);
-//    }
-//    _loginForm = new LoginForm();
-//    _loginForm.setVisible(true);
-//    _loginForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    UIManager.setLookAndFeel(new FlatDarkLaf());
+    loginForm = new LoginForm();
+    accountsForm = new AccountsForm();
+    hotelsForm = new HotelsForm();
+    loginForm.setVisible(true);
+    _currForm = loginForm;
     
-    AccountManager accountManager = new AccountManager("accounts");
-    accountManager.ReadFile();
+    // initialize accounts    
+    accountManager = new AccountManager("accounts");
+    accountManager.LoadAccounts();
+  }
+  
+  public static void SwitchForm(JFrame form)
+  {
+    _currForm.setVisible(false);
+    form.setVisible(true);
+    _currForm = form;
   }
 }
