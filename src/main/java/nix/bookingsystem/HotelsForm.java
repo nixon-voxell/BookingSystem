@@ -5,8 +5,11 @@
 package nix.bookingsystem;
 
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,6 +24,10 @@ public class HotelsForm extends javax.swing.JFrame
   public HotelsForm()
   {
     initComponents();
+    _jungleContentScroll.getVerticalScrollBar().setUnitIncrement(16);
+    _jungleContentScroll.getHorizontalScrollBar().setUnitIncrement(16);
+    _seaContentScroll.getVerticalScrollBar().setUnitIncrement(16);
+    _seaContentScroll.getHorizontalScrollBar().setUnitIncrement(16);
   }
 
   /**
@@ -114,13 +121,11 @@ public class HotelsForm extends javax.swing.JFrame
       .addComponent(_seaTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
     );
 
-    _seaContentPanel.setPreferredSize(new java.awt.Dimension(480, 466));
-
     javax.swing.GroupLayout _seaContentPanelLayout = new javax.swing.GroupLayout(_seaContentPanel);
     _seaContentPanel.setLayout(_seaContentPanelLayout);
     _seaContentPanelLayout.setHorizontalGroup(
       _seaContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 481, Short.MAX_VALUE)
+      .addGap(0, 480, Short.MAX_VALUE)
     );
     _seaContentPanelLayout.setVerticalGroup(
       _seaContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,16 +223,37 @@ public class HotelsForm extends javax.swing.JFrame
   
   public void InitializeHotels()
   {
-    _jungleContentPanel.setLayout(new GridLayout(10, 2));
-    
     ArrayList<Hotel> hotels = BookingSystem.hotelManager.getHotels();
-    for (int h=0; h < 10; h++)
+    GenerateContents(_jungleContentPanel, hotels, 0, 10);
+    GenerateContents(_seaContentPanel, hotels, 10, 20);
+  }
+  
+  private void GenerateContents(JPanel panel, ArrayList<Hotel> hotels, int start, int end)
+  {
+    GridLayout gridLayout = new GridLayout(10, 2, 10, 5);
+    panel.setLayout(gridLayout);
+    
+    for (int h=start; h < end; h++)
     {
       Hotel hotel = hotels.get(h);
-      JLabel label = new JLabel(hotel.name);
-      _jungleContentPanel.add(label);
+      ImageIcon icon = new ImageIcon(hotel.imageName);
+      float width = icon.getIconWidth();
+      float height = icon.getIconHeight();
+      Image image = icon.getImage();
+      image = image.getScaledInstance(
+        (int)TARGET_WIDTH, (int)(TARGET_WIDTH/width*height), Image.SCALE_SMOOTH
+      );
+      icon.setImage(image);
+      JLabel iconLabel = new JLabel(icon, JLabel.HORIZONTAL);
+      JLabel nameLabel = new JLabel(hotel.name);
+      iconLabel.setHorizontalAlignment(JLabel.LEADING);
+      nameLabel.setHorizontalAlignment(JLabel.LEADING);
+      panel.add(iconLabel);
+      panel.add(nameLabel);
     }
   }
+  
+  private final float TARGET_WIDTH = 200.0f;
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel _accountsTitle;
