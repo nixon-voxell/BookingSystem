@@ -22,34 +22,51 @@ onced book, room will not be able to be booked again
 */
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 public class BookingSystem
 {
+  public static String currUser;
   public static LoginForm loginForm;
   public static AccountsForm accountsForm;
-  public static HotelsForm hotelsForm;
-  
+  public static RoomsForm roomsForm;
+  public static BookingForm bookingForm;
+  public static ManageBookingForm manageBookingForm;
+  public static ReceiptForm receiptForm;
+
   public static AccountManager accountManager;
-  public static HotelManager hotelManager;
-  
+  public static RoomManager roomManager;
+  public static BookingManager bookingManager;
+
   private static JFrame _currForm;
+
+  private static final int SPAWN_X = 700, SPAWN_Y = 500;
 
   public static void main(String[] args) throws Exception
   {
     UIManager.setLookAndFeel(new FlatDarkLaf());
+
+    // initialize forms
     loginForm = new LoginForm();
     accountsForm = new AccountsForm();
-    hotelsForm = new HotelsForm();
+    roomsForm = new RoomsForm();
+    bookingForm = new BookingForm();
+    manageBookingForm = new ManageBookingForm();
+    receiptForm = new ReceiptForm();
     loginForm.setVisible(true);
     _currForm = loginForm;
+    _currForm.setLocation(SPAWN_X, SPAWN_Y);
     
     // initialize accounts    
     accountManager = new AccountManager("accounts");
-    accountManager.LoadAccounts();
+    accountManager.LoadData();
     // initialize hotels
-    hotelManager = new HotelManager("hotels");
-    hotelManager.LoadHotels();
+    roomManager = new RoomManager("rooms");
+    roomManager.LoadData();
+    // initialize bookings
+    bookingManager = new BookingManager("bookings");
+    bookingManager.LoadData();
   }
   
   public static void SwitchForm(JFrame form)
@@ -57,5 +74,6 @@ public class BookingSystem
     _currForm.setVisible(false);
     form.setVisible(true);
     _currForm = form;
+    _currForm.setLocation(SPAWN_X, SPAWN_Y);
   }
 }

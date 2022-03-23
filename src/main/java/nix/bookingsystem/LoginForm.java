@@ -39,21 +39,19 @@ public class LoginForm extends javax.swing.JFrame {
     _passwordField = new javax.swing.JPasswordField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize(new java.awt.Dimension(1000, 600));
 
     _titleLabel.setFont(new java.awt.Font("Colonna MT", 0, 36)); // NOI18N
+    _titleLabel.setForeground(new java.awt.Color(142, 196, 196));
     _titleLabel.setText("The Grand Hotel");
     _titleLabel.setToolTipText("");
 
     _loginTitle.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
     _loginTitle.setText("LOGIN");
 
-    _usernameLabel.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
-    _usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    _usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
     _usernameLabel.setText("Username:");
 
-    _passwordLabel.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
-    _passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+    _passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
     _passwordLabel.setText("Password:");
 
     _usernameField.addActionListener(new java.awt.event.ActionListener()
@@ -64,7 +62,7 @@ public class LoginForm extends javax.swing.JFrame {
       }
     });
 
-    _loginButton.setFont(new java.awt.Font("Maiandra GD", 0, 12)); // NOI18N
+    _loginButton.setFont(new java.awt.Font("Maiandra GD", 1, 12)); // NOI18N
     _loginButton.setText("LOGIN");
     _loginButton.addActionListener(new java.awt.event.ActionListener()
     {
@@ -120,7 +118,7 @@ public class LoginForm extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(_loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(_titleLabel))
-        .addContainerGap(416, Short.MAX_VALUE))
+        .addContainerGap(437, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +127,7 @@ public class LoginForm extends javax.swing.JFrame {
         .addComponent(_titleLabel)
         .addGap(52, 52, 52)
         .addComponent(_loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(158, Short.MAX_VALUE))
+        .addContainerGap(162, Short.MAX_VALUE))
     );
 
     pack();
@@ -150,18 +148,19 @@ public class LoginForm extends javax.swing.JFrame {
       int accountNum = BookingSystem.accountManager.HasAccount(loginAccount);
       if (accountNum != -1)
       {
+        BookingSystem.currUser = loginAccount.username;
         LoginSuccessful();
         return;
       }
     }
-    
+
     LoginFail();
   }//GEN-LAST:event__loginButtonActionPerformed
 
   private void LoginSuccessful()
   {
-    BookingSystem.hotelsForm.InitializeHotels();
-    BookingSystem.SwitchForm(BookingSystem.hotelsForm);
+    BookingSystem.roomsForm.InitializeRooms();
+    BookingSystem.SwitchForm(BookingSystem.roomsForm);
   }
   
   private void LoginFail()

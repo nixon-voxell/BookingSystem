@@ -31,7 +31,7 @@ public class AccountsForm extends javax.swing.JFrame
     {
       public void actionPerformed(ActionEvent e)
       {
-        int confirm = JOptionPane.showConfirmDialog(_accountTable, "Delete confirmation");
+        int confirm = JOptionPane.showConfirmDialog(_accountTable, "Are you sure you want to delete?");
         if (confirm != 0) return;
         JTable table = (JTable)e.getSource();
         int modelRow = Integer.valueOf( e.getActionCommand() );
@@ -75,10 +75,11 @@ public class AccountsForm extends javax.swing.JFrame
       }
     ));
     _accountTable.setToolTipText("");
+    _accountTable.setShowGrid(true);
     _accountScroller.setViewportView(_accountTable);
 
     _addButton.setBackground(new java.awt.Color(59, 114, 87));
-    _addButton.setFont(new java.awt.Font("Maiandra GD", 0, 12)); // NOI18N
+    _addButton.setFont(new java.awt.Font("Maiandra GD", 1, 12)); // NOI18N
     _addButton.setForeground(new java.awt.Color(255, 255, 255));
     _addButton.setText("ADD");
     _addButton.addActionListener(new java.awt.event.ActionListener()
@@ -90,7 +91,7 @@ public class AccountsForm extends javax.swing.JFrame
     });
 
     _saveButton.setBackground(new java.awt.Color(59, 112, 114));
-    _saveButton.setFont(new java.awt.Font("Maiandra GD", 0, 12)); // NOI18N
+    _saveButton.setFont(new java.awt.Font("Maiandra GD", 1, 12)); // NOI18N
     _saveButton.setForeground(new java.awt.Color(255, 255, 255));
     _saveButton.setText("SAVE");
     _saveButton.addActionListener(new java.awt.event.ActionListener()
@@ -102,7 +103,7 @@ public class AccountsForm extends javax.swing.JFrame
     });
 
     _cancelButton.setBackground(new java.awt.Color(114, 114, 114));
-    _cancelButton.setFont(new java.awt.Font("Maiandra GD", 0, 12)); // NOI18N
+    _cancelButton.setFont(new java.awt.Font("Maiandra GD", 1, 12)); // NOI18N
     _cancelButton.setForeground(new java.awt.Color(255, 255, 255));
     _cancelButton.setText("CANCEL");
     _cancelButton.addActionListener(new java.awt.event.ActionListener()
@@ -159,15 +160,14 @@ public class AccountsForm extends javax.swing.JFrame
 
   private void _saveButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event__saveButtonActionPerformed
   {//GEN-HEADEREND:event__saveButtonActionPerformed
-    DefaultTableModel model = (DefaultTableModel) _accountTable.getModel();
-    int rowCount = model.getRowCount();
+    int rowCount = _accountTable.getRowCount();
     
     // validate if there are any duplicated usernames
     ArrayList<String> usernames = new ArrayList<>();
     
     for (int r=0; r < rowCount; r++)
     {
-      String username = (String) model.getValueAt(r, 0);
+      String username = (String) _accountTable.getValueAt(r, 0);
       if (!usernames.contains(username))
         usernames.add(username);
       else
@@ -177,7 +177,7 @@ public class AccountsForm extends javax.swing.JFrame
       }
     }
     
-    SaveAccounts(rowCount, model);
+    SaveAccounts(rowCount, _accountTable);
   }//GEN-LAST:event__saveButtonActionPerformed
 
   private void _cancelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event__cancelButtonActionPerformed
@@ -240,13 +240,13 @@ public class AccountsForm extends javax.swing.JFrame
       model.addRow(new Object[]{account.username, account.password, "Delete"});
   }
   
-  private void SaveAccounts(int rowCount, DefaultTableModel model)
+  private void SaveAccounts(int rowCount, JTable table)
   {
     BookingSystem.accountManager.DeleteAllAccounts();
     for (int r=0; r < rowCount; r++)
     {
-      String username = (String) model.getValueAt(r, 0);
-      String password = (String) model.getValueAt(r, 1);
+      String username = (String) table.getValueAt(r, 0);
+      String password = (String) table.getValueAt(r, 1);
       BookingSystem.accountManager.CreateAccount(username, password);
     }
     

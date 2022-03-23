@@ -20,7 +20,8 @@ public class AccountManager extends AbstractFileManager
     super(filename);
   }
 
-  public void LoadAccounts() throws Exception
+  @Override
+  public void LoadData() throws Exception
   {
     ReadFile();
     int contentLength = ContentLength();
