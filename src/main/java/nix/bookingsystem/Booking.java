@@ -86,15 +86,14 @@ public class Booking
   
   public boolean CheckConflict(Date start, Date end)
   {
-    return DateInBetween(
-      LocalDate.of(start.getYear(), start.getMonth(), start.getDay()),
-      LocalDate.of(this.startDate.getYear(), this.startDate.getMonth(), this.startDate.getDay()),
-      LocalDate.of(this.endDate.getYear(), this.endDate.getMonth(), this.endDate.getDay())
-    ) || DateInBetween(
-      LocalDate.of(end.getYear(), end.getMonth(), end.getDay()),
-      LocalDate.of(this.startDate.getYear(), this.startDate.getMonth(), this.startDate.getDay()),
-      LocalDate.of(this.endDate.getYear(), this.endDate.getMonth(), this.endDate.getDay())
-    );
+    LocalDate localStart = LocalDate.of(start.getYear(), start.getMonth(), start.getDate());
+    LocalDate localEnd = LocalDate.of(end.getYear(), end.getMonth(), end.getDate());
+    LocalDate thisLocalStart = LocalDate.of(this.startDate.getYear(), this.startDate.getMonth(), this.startDate.getDate());
+    LocalDate thisLocalEnd = LocalDate.of(this.endDate.getYear(), this.endDate.getMonth(), this.endDate.getDate());
+
+    return DateInBetween(localStart, thisLocalStart, thisLocalEnd) ||
+      DateInBetween(localEnd, thisLocalStart, thisLocalEnd) ||
+      (localStart.isBefore(thisLocalStart) && localEnd.isAfter(thisLocalEnd));
   }
   
   private boolean DateInBetween(LocalDate d, LocalDate start, LocalDate end)

@@ -54,10 +54,9 @@ public class ReceiptForm extends javax.swing.JFrame
     _priceField = new javax.swing.JTextField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setPreferredSize(new java.awt.Dimension(500, 700));
 
     _manageBookingTitle.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-    _manageBookingTitle.setText("Reciept");
+    _manageBookingTitle.setText("Receipt");
 
     _emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
     _emailLabel.setText("Email:");
@@ -277,8 +276,9 @@ public class ReceiptForm extends javax.swing.JFrame
     _endDateChooser.setDate(booking.endDate);
     _roomField.setText(_rooms.get(booking.roomIdx).name);
 
-    int price = booking.endDate.compareTo(booking.startDate)*(350 + 10);
-    _priceField.setText("RM " + price);
+    float price = (float)booking.endDate.compareTo(booking.startDate)*(350 + 10);
+    price += price * 0.1;
+    _priceField.setText("RM " + String.format("%.2f", price));
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
